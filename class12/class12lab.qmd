@@ -1,0 +1,28 @@
+---
+title: "Class 12: Population Analysis"
+author: "Hyeseung (Frankie) Son PID: A16025601"
+format: html
+editor: visual
+---
+
+# Section 1: Proportion of G/G in a population
+
+Downloaded a CSV file from Ensemble <
+https://useast.ensembl.org/Homo_sapiens/Variation/Sample?db=core;r=17:39894946-39895247;v=rs8067378;vdb=variation;vf=105535077#373531_tablePanel> 
+
+Here we read a csv file to determine the allele frequency. 
+
+```{r}
+mxl <- read.csv("/Users/frank/Downloads/class12/373531-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378.csv")
+
+head(mxl)
+```
+```{r}
+table(mxl$Genotype..forward.strand.)
+```
+
+```{r}
+table(mxl$Genotype..forward.strand.) / nrow(mxl) * 100
+```
+
+14% are homozygous for G/G. 
