@@ -1,0 +1,116 @@
+---
+title: "Class 09: Structural Bioinformatics"
+author: "Hyeseung (Frankie) Son PID: A16025601"
+format: html
+---
+
+# Introduction to the RCSB Protein Data Bank (PDB)
+
+```{r}
+db <- read.csv("Data Export Summary.csv")
+db
+```
+
+> Q1. What percentage of structures in the PDB are solved by X-Ray and Electron Microscopy.
+
+```{r}
+
+xray.tot <- sum(as.numeric(gsub(",", "", db$X.ray)))
+xray.tot
+
+em.tot <- sum(as.numeric(gsub(",", "", db$EM)))
+em.tot
+```
+We found the sum of each column. Let's create a working snippet and a new function
+
+```{r}
+#I will work with `x` as the input
+
+sum_comma <- function(x) {
+  # Substitue the comma and convert to numeric
+  sum(as.numeric(gsub(",", "", x)))
+
+}
+```
+
+For X ray: 
+We'll round the answer to two decimal places
+```{r}
+round (sum_comma(db$X.ray) / sum_comma(db$Total), 2)
+```
+86% of structures are solved by X-ray
+
+For EM:
+we'll round the answer to 2 decimal places as well. 
+```{r}
+round( sum_comma(db$EM)/ sum_comma(db$Total), 2)
+```
+7% of structures are solved by EM.
+
+> Q2. What proportion of structures in the PDB are protein?
+
+```{r}
+round (sum_comma(db$Total[1]) / sum_comma(db$Total), 2)
+```
+87% of structures in the PDB file are protein. 
+
+# Visualizing the HIV-1 protease structure
+
+> Q3. insert this image 
+
+![](1HSG.png)
+
+> Q4. Water molecules normally have 3 atoms. Why do we see just one atom per water molecule in this structure?
+
+
+The resolution is too low on the struture to see H atoms. We need a resolution of below 1 Angstroms to visualize the H atoms.
+
+> Q5. There is a critical “conserved” water molecule in the binding site. Can you identify this water molecule? What residue number does this water molecule have
+
+HOH308
+
+# Working with Structures in R
+
+```{r}
+library(bio3d)
+
+pdb <- read.pdb("1hsg")
+pdb
+```
+> Q7. How many amino acid residues are there in this pdb object? 
+
+198 residues
+
+> Q8. Name one of the two non-protein residues? 
+
+HOH127
+
+> Q9. How many protein chains are in this structure? 
+
+2 protein chains, (A,B)
+
+```{r}
+attributes(pdb)
+```
+
+```{r}
+head(pdb$atom)
+```
+
+REad an ADK structure
+```{r}
+adk <- read.pdb("6s36")
+```
+
+
+Perform a prediction of flexibility with a technique called NMA
+```{r}
+m <- nma(adk)
+plot(m)
+```
+
+Write out a "movie" (aka a trajectory) of the motion for viewing in Molstar
+```{r}
+mktrj(m, file="adk_m7.pdb")
+```
+
