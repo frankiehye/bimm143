@@ -1,0 +1,153 @@
+---
+title: "Class 08: Machine Learning Mini Project"
+author: "Hyeseung (Frankie) Son PID: A16025601"
+format: html
+editor: visual
+---
+
+# Breast Cancer Project
+
+```{r}
+wisc.data <- read.csv("WisconsinCancer.csv", row.names = 1)
+head(wisc.data)
+
+```
+
+> Q. How many patient samples (observations) are in the dataset?
+
+```{r}
+nrow(wisc.data)
+```
+
+There are `r nrow(wisc.data)` patients in this dataset.
+
+> Q. How many cancer (M) and non-cancer (B) samples are there?
+
+```{r}
+table(wisc.data$diagnosis)
+```
+
+We'll use the table function and the `$` to find the diagnosis column's variables and the count for each. We find that there are 357 non-cancer samples and 212 cancer samples.
+
+Save the diagnoses for later use to compare how well we do with PCA etc.
+
+```{r}
+diagnosis <- as.factor(wisc.data$diagnosis)
+#diagnosis
+```
+
+Now exclude the diagnosis column from the data using negative numbers for rows.
+
+```{r}
+wisc <- wisc.data[, -1]
+```
+
+> Q. How many "dimensions", "variables", "columns" are there in this dataset?
+
+```{r}
+ncol(wisc)
+```
+
+There are 30 columns/variables in this dataset.
+
+# Principal Component Analysis (PCA)
+
+To perform PCA in R we can use the `prcomp()` function. It takes a numeric dataset as input and a optional `scale=FALSE/TRUE` argument.
+
+Generally we always want to set `scale=TRUE` but let's make sure by checking if the mean and standard deviation values are different across these 30 columns.
+
+```{r}
+round(colMeans(wisc))
+```
+
+```{r}
+pca <- prcomp(wisc, scale = TRUE)
+summary(pca)
+```
+
+Let's make a plot after examining the variable names of this new dataset.
+
+```{r}
+attributes(pca)
+```
+
+```{r}
+plot(pca$x[,1], pca$x[,2], col=diagnosis)
+```
+
+The PCA plot shows a separation of malignant from benign diagnoses that are plotted with the new axes derived from the PCA anlayses we ran.
+
+```{r}
+library(ggplot2)
+
+x <- as.data.frame(pca$x)
+
+ggplot(x) +
+  aes(PC1, PC2, col = diagnosis) +
+  geom_point()
+
+```
+
+> Q. How much variance is captured in the top 3 PC's?
+
+They capture 76% of the total variance.
+
+> Q9. For the first principal component, what is the component of the loading vector (i.e. wisc.pr\$rotation\[,1\]) for the feature concave.points_mean? This tells us how much this original feature contributes to the first PC.
+
+```{r}
+pca$rotation["concave.points_mean",1]
+```
+
+```{r}
+attributes(pca)
+```
+
+# Combine PCA Results with clustering
+
+We can use our new PCA variables (i.e. the scores along the PCs contained in the `pca$x`) as input for other methods such as clustering.
+
+```{r}
+d <- dist( pca$x[,1:3])
+
+hc <- hclust(d, method = "ward.D2")
+plot(hc)
+```
+
+This dendogram is extremely complicated and hard to read. To get our cluster membership vector we can use the `cutree()` function and specify a height (`h`) or number of groups (`k`).
+
+```{r}
+grps <- cutree(hc, h= 80)
+table(grps)
+```
+
+I want to find how many diagnosis "M" and "B" are in each group?
+
+```{r}
+table(diagnosis, grps)
+```
+
+In group 1, there are 179 cases of "M", 24 cases of "B" and in group 2, there are "33" cases of "M" and 333 cases of "B".
+
+We can also plot our results using our clustering vector `grps`.
+
+```{r}
+plot(pca$x[,1], pca$x[,2], col=grps)
+```
+
+```{r}
+ggplot(x) +
+  aes(PC1, PC2, col=grps) +
+  geom_point()
+```
+
+> Q15. What is the specificity and sensitivity of your current results?
+
+Sensitivity refers to a test's ability to correctly detect ill patients who do have the condition. In our example here the sensitivity is the total number of samples in the cluster identified as predominantly malignant (cancerous) divided by the total number of known malignant samples. In other words: TP/(TP+FN). Specificity relates to a test's ability to correctly reject healthy patients without a condition. In our example specificity is the proportion of benign (not cancerous) samples in the cluster identified as predominantly benign that are known to be benign. In other words: TN/(TN+FN).
+
+```{r}
+sensitivity <- 179/(179+33) 
+sensitivity
+
+specificity <- 333/(333+24) 
+specificity
+```
