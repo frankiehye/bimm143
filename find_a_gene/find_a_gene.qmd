@@ -1,0 +1,46 @@
+---
+title: "Find A Gene"
+author: Frankie
+format: html
+editor: visual
+---
+
+```{r}
+library(bio3d)
+library(heatmaply)
+
+alignment <- read.fasta("fasta_seq_alignment")
+
+identity_matrix <- seqidentity(alignment)
+
+heatmaply(identity_matrix, labels = colnames(identity_matrix),
+          xlab = "Sequences", ylab = "Sequences",
+          main = "Sequence Identity Heatmap")
+```
+
+```{r}
+library(bio3d)
+
+alignment <- read.fasta("fasta_seq_alignment")
+sequences <- alignment$ali
+head(alignment$ali)
+head(alignment$id)
+```
+
+
+```{r}
+result <- blast.pdb(alignment$ali[2, ])
+head(result)
+
+hits <- plot(result)
+head(hits$pdb.id)
+```
+
+
+```{r}
+anno1 <- pdb.annotate(hits$pdb.id)
+head(annotate1)
+
+anno2 <- pdb.annotate(result$hit.tbl$subjectids)
+head(annotate2)
+```
