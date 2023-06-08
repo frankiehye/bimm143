@@ -1,0 +1,101 @@
+---
+title: "Class 10: Structural Bioinformatics Pt.2"
+author: "Hyeseung (Frankie) Son PID: A16025601"
+format: html
+editor: visual
+---
+
+# Comparative Analysis of ADK
+
+Adenylate kinase (Adk) is a ubiquitous enzyme that functions to maintain the equilibrium between cytoplasmic nucleotides essential for many cellular processes.
+
+There has been lots of work done on this protein due to its importance in lots of crystal structures.
+
+We will begin by getting an example ADK sequence from the database.
+
+> Q10. Which of the packages above is found only on BioConductor and not CRAN?
+
+"msa"
+
+> Q11. Which of the above packages is not found on BioConductor or CRAN?:
+
+> Q12. True or False? Functions from the devtools package can be used to install packages from GitHub and BitBucket?
+
+TRUE
+
+```{r}
+library(bio3d)
+
+aa <- get.seq("1ake_A")
+aa
+```
+
+We can now run BLAST with this sequence.
+
+```{r}
+#b <- blast.pdb(aa)
+```
+
+```{r}
+# hits <- plot(b)
+```
+
+Let's see what is in our `hits` object.
+```{r}
+#hits$pdb.id
+
+hits <- NULL
+hits$pdb.id <- c('1AKE_A','6S36_A','6RZE_A','3HPR_A','1E4V_A','5EJE_A','1E4Y_A','3X2S_A','6HAP_A','6HAM_A','4K46_A','3GMT_A','4PZL_A')
+```
+
+Now we can download all these PDB strcuture files.
+```{r}
+# Download related pdb files
+files <- get.pdb(hits$pdb.id, path="pdbs", split=TRUE, gzip=TRUE)
+
+```
+
+Now I want to align and supperpose these structures that are allover the place.
+
+```{r}
+# Align related PDBs
+pdbs <- pdbaln(files, fit = TRUE, exefile="msa")
+```
+Let's have a look at our `pdbs` object.
+```{r}
+pdbs
+```
+
+Now we have our aligned and superposed structures we can perform all sorts of anlaysis on them. Let's do PCA. 
+
+```{r}
+# Perform PCA
+pc.xray <- pca(pdbs)
+plot(pc.xray)
+```
+ 
+Results of PCA on Adenylate kinase X-ray structures. Each dot represents one PDB structure.
+
+We can cluster the structures by RMSD (Root Mean Square Distance) (or any other method).
+
+```{r}
+# Calculate RMSD
+rd <- rmsd(pdbs)
+rd
+
+# Structure-based clustering
+hc.rd <- hclust(dist(rd))
+
+grps <- cutree(hc.rd, k=3)
+
+plot(pc.xray, 1:2, col=grps, bg=grps)
+```
+
+We can make a wee movie - also called a trajectory of the major differences (i.e. structural displacements) of ADK. 
+```{r}
+# Visualize the Principal Component analysis
+pc1 <- mktrj(pc.xray, pc=1, file="pc_1.pdb")
+pc1
+```
+
+
