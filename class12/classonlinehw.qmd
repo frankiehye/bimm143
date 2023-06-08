@@ -1,0 +1,114 @@
+---
+title: "Class 11: HW Population Analysis"
+author: "Hyeseung (Frankie) Son PID: A16025601"
+format: html
+editor: visual
+---
+
+# Section 1: Proportion of G/G in a population
+
+Downloaded a CSV file from Ensemble \< https://useast.ensembl.org/Homo_sapiens/Variation/Sample?db=core;r=17:39894946-39895247;v=rs8067378;vdb=variation;vf=105535077#373531_tablePanel\>
+
+Here we read a csv file to determine the allele frequency.
+
+```{r}
+mxl <- read.csv("/Users/frank/Downloads/class12/373531-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378.csv")
+
+head(mxl)
+```
+
+```{r}
+table(mxl$Genotype..forward.strand.)
+```
+
+```{r}
+table(mxl$Genotype..forward.strand.) / nrow(mxl) * 100
+```
+
+In the MXL population, the G\|G homozygous for childhood asthma is 14%.
+
+Now let's look at a different population. I picked GBR.
+
+```{r}
+gbr <- read.csv("/Users/frank/Downloads/class12/373522-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378.csv")
+```
+
+Find the proportion of G\|G.
+
+```{r}
+round(table(gbr$Genotype..forward.strand.) / nrow(gbr) * 100)
+```
+
+The proportion of G\|G in this population is 30%, so childhood asthma is more frequent in GBR than MXL.
+
+## Section 4: Population Scale Analysis
+
+One sample is obviously not enough to know what is happening in a population. You are interested in assessing genetic differences on a population scale.
+
+So, you processed about \~230 samples and did the normalization on a genome level. Now, you want to find whether there is any association of the 4 asthma-associated SNPs (rs8067378...) on ORMDL3 expression.
+
+> Q13: Read this file into R and determine the sample size for each genotype and their corresponding median expression levels for each of these genotypes. Hint: The read.table(), summary() and boxplot() functions will likely be useful here.
+
+How many samples do we have?
+
+```{r}
+expr <- read.table("rs8067378_ENSG00000172057.6.txt")
+
+head(expr)
+```
+
+```{r}
+nrow(expr)
+```
+
+There are 462 individuals in this sample.
+
+```{r}
+table(expr$geno)
+```
+
+The sample size for each genotype is: 108 individuals with A\|A, 233 with A\|G, 121 with G\|G.
+
+```{r}
+geno.AA <- expr[expr$geno == "A/A", "exp"]
+geno.AG <- expr[expr$geno == "A/G", "exp"]
+geno.GG <- expr[expr$geno == "G/G", "exp"]
+
+median.AA <- median(geno.AA)
+median.AG<- median(geno.AG)
+median.GG <- median(geno.GG)
+
+median.AA
+median.AG
+median.GG
+```
+
+A more simpler method may be:
+
+```{r}
+median <- boxplot(exp ~ geno, data=expr)
+summary.stats <- summary(median$stats)
+
+summary.stats
+```
+
+The median expression levels for each genotype are as follows: A/A: 31.2, A/G: 25.1, G/G: 20.1.
+
+> Q14: Generate a boxplot with a box per genotype, what could you infer from the relative expression value between A/A and G/G displayed in this plot? Does the SNP effect the expression of ORMDL3?
+
+```{r}
+library(ggplot2)
+```
+
+Let's make a boxplot.
+
+```{r}
+boxplot.expr <- ggplot(expr) + aes(x=geno, y=exp, fill=geno) +
+  geom_boxplot(notch=TRUE)
+
+boxplot.expr
+```
+
+Having a G/G genotype is associated with having a decreased expression of the ORMDL3 gene, while A/A genotype is associated with having increased expression of the ORMDL3 gene.
+
+The A/G genotype has ORMDL3 gene expression levels in between that of the A/A and G/G genotypes' expression levels, and overlaps with both the expression levels of the A/A and G/G boxplots, so the heterozygous genotype may not be all that different from either homozygous genotype. We find that overall, having a a higher percentage of G alleles (asthma-related SNPs) in your genotype are associated with decreased levels of ORMLD3 gene expression.
