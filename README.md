@@ -12,9 +12,10 @@ Form class [BIMM143](https://bioboot.github.io/bimm143_S23/)
 - Class 08: [**Machine Learning Mini Project: Breast Cancer**](https://github.com/frankiehye/bimm143/blob/main/class08_files/class08.qmd)
 
 - Class 09: [**Structural Bioinformatics**](https://github.com/frankiehye/bimm143/blob/main/class09/class09.qmd)
-- Class 10.2: https://github.com/frankiehye/bimm143/blob/main/class10_files/class10.qmd
 
-- Class 10: [**Halloween Candy Project**](https://github.com/frankiehye/bimm143/blob/main/class10_files/Class%2010_%20Candy%20Project.pdf)
+- Class 10.1: [**Halloween Candy Project**](https://github.com/frankiehye/bimm143/blob/main/class10_files/Class%2010_%20Candy%20Project.pdf)
+
+- Class 10.2: [**Structural Bioinformatics: Comparative Analysis of ADK**](https://github.com/frankiehye/bimm143/blob/main/class10_files/class10.qmd)
 
 - Class 11: [**Genome Informatics: Population Analysis**](https://github.com/frankiehye/bimm143/blob/main/class12/classonlinehw.qmd)
 
@@ -22,9 +23,9 @@ Form class [BIMM143](https://bioboot.github.io/bimm143_S23/)
 
 - Class 13: [**DESeq2: RNA-Seq Analysis Mini Project**](https://github.com/frankiehye/bimm143/blob/main/class12/class12thurs.qmd)
 
-- Class 14: [**Find a Gene Project**] (
+- Class 14: [**Find a Gene Project**](https://github.com/frankiehye/bimm143/blob/main/find_a_gene/Find%20A%20Gene%20Project.pdf)
 
-- Class 15: [**Essential UNIX for bioinformatics**] (
+- Class 15: [**Essential UNIX for bioinformatics**](https://github.com/frankiehye/bimm143/blob/main/class15/HW8_unix_questions.pdf)
 
 - Class 16: [**Analyzing sequencing data in the cloud**](https://github.com/frankiehye/bimm143/blob/main/class16/class16_extracredit.qmd)
 
