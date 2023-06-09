@@ -30,5 +30,3 @@ Form class [BIMM143](https://bioboot.github.io/bimm143_S23/)
 - Class 16: [**Analyzing sequencing data in the cloud**](https://github.com/frankiehye/bimm143/blob/main/class16/class16_extracredit.qmd)
 
 - Class 17: [**Pertussis Resurgence Mini Project**](https://github.com/frankiehye/bimm143/blob/main/class17/class17.qmd)
-
-- Class 18: [**Covid-19 Vaccination Rates Project**](
