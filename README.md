@@ -9,9 +9,10 @@ Form class [BIMM143](https://bioboot.github.io/bimm143_S23/)
 
 - Class 07: [**Introduction to Machine Learning**](https://github.com/frankiehye/bimm143/blob/63024ecfa1bd082ffc16b84bed897701ab6ea731/Class%207_%20Clustering%20and%20PCA.pdf)
 
-- Class 08: [**Machine Learning Mini Project: Breast Cancer**](
+- Class 08: [**Machine Learning Mini Project: Breast Cancer**](https://github.com/frankiehye/bimm143/blob/main/class08_files/class08.qmd)
 
-- Class 09: [**Structural Bioinformatics**](
+- Class 09: [**Structural Bioinformatics**](https://github.com/frankiehye/bimm143/blob/main/class09/class09.qmd)
+- Class 10.2: https://github.com/frankiehye/bimm143/blob/main/class10_files/class10.qmd
 
 - Class 10: [**Halloween Candy Project**](
 
