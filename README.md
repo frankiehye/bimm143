@@ -16,9 +16,9 @@ Form class [BIMM143](https://bioboot.github.io/bimm143_S23/)
 
 - Class 10: [**Halloween Candy Project**](
 
-- Class 11: [**Genome Informatics: Population Analysis**](
+- Class 11: [**Genome Informatics: Population Analysis**](https://github.com/frankiehye/bimm143/blob/main/class12/classonlinehw.qmd)
 
-- Class 12: [**Transcriptomics and the analysis of RNA-Seq data with DESeq2**](
+- Class 12: [**Transcriptomics and the analysis of RNA-Seq data with DESeq2**](https://github.com/frankiehye/bimm143/blob/main/class12/class12thurs.qmd)
 
 - Class 13: [**DESeq2: RNA-Seq Analysis Mini Project**](
 
