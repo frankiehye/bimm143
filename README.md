@@ -3,7 +3,7 @@ My Bioinformatics work from Spring 2023 at UC San Diego
 
 Form class [BIMM143](https://bioboot.github.io/bimm143_S23/)
 
-- Class 05: [**Data visualization with ggplot2**](
+- Class 05: [**Data visualization with ggplot2**](https://github.com/frankiehye/bimm143/blob/main/Class_05__Data_Visualization.pdf)
 
 - Class 06: [**R functions**](https://github.com/frankiehye/bimm143/blob/main/class06/class06.qmd)
 
